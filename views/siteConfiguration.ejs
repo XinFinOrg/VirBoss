@@ -1,0 +1,160 @@
+<% include layouts/adminSidebar %>
+
+
+    <div class="content-wrapper">
+        <div class="content container">
+            <!--START PAGE HEADER -->
+            <header class="page-header">
+                <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h1>Site Configuration</h1>
+                    </div>
+                </div>
+            </header>
+            <!--END PAGE HEADER -->
+
+            <!--START PAGE CONTENT -->
+            <section class="page-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">Site Settings</div>
+                            <form action="/icoDashboard/siteConfiguration/project/<%= projectName %>/updateSiteConfiguration" method="post" class="form-horizontal"
+                                enctype="multipart/form-data">
+                                <div class="card-body">
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <div class="user_detail">
+                                                <h5 class="mt-2">Site Logo</h5>
+                                            </div>
+                                            <div class="user_pic_wrap">
+                                                <img src="/adminAssets/img/logo1.png" id="imglogo" height="250px" width="300px" alt="user_img">
+                                                <span class="edit_pic">
+                                                    <label for="user_img">
+                                                        <input type="file" name="filename" id="user_img" accept="image/gif, image/jpeg, image/png">
+                                                        <i class="icon dripicons-camera"></i>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="siteName">Site Name</label>
+                                            <input type="text" class="form-control" id="siteName" name="site_name" placeholder="Site Name">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="coinName">Coin Name</label>
+                                            <input type="text" class="form-control" id="coinName" name="coin_name" placeholder="Coin Name" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="tokenSupply">Token Supply</label>
+                                            <input type="text" class="form-control" id="tokenSupply" name="token_supply" placeholder="Token Supply" disabled>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="minimumContribution">Minimum Contribution</label>
+                                            <input type="text" class="form-control" id="minimumContribution" name="minimum_contribution" placeholder="Minimum Contribution">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="hardCap">Hard Cap</label>
+                                            <input type="text" class="form-control" id="hardCap" name="hard_cap" placeholder="Hard Cap">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="softCap">Soft Cap</label>
+                                            <input type="text" class="form-control" id="softCap" name="soft_cap" placeholder="Soft Cap">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="startDate">Start Date</label>
+                                            <input type="date" class="form-control" id="startDate" name="start_date" placeholder="Start Date">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="endDate">End Date</label>
+                                            <input type="date" class="form-control" id="endDate" name="end_date" placeholder="End Date">
+                                        </div>
+
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="tokenAddress">Token Contract Address</label>
+                                            <input type="text" class="form-control" id="tokenAddress" name="contract_address" placeholder="Token Contract Address" disabled>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="crowdsaleHash">Crowdsale Contract Address</label>
+                                            <input type="text" class="form-control" id="crowdsaleHash" name="crowdsale_address" placeholder="Crowdsale Contract Hash" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label for="websiteUrl">Website Url</label>
+                                            <input type="text" class="form-control" id="websiteUrl" name="website_url" placeholder="Website Url">
+                                        </div>
+                                    </div>
+                                    <div class="card-footer bg-light text-center">
+                                        <div class="form-actions">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <button class="btn btn-primary btn-rounded">Update</button>
+                                                    <button class="btn btn-light btn-rounded btn-outline">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--END PAGE CONTENT -->
+        </div>
+
+
+    </div>
+    <!-- END CONTENT WRAPPER -->
+    </div>
+    <!-- END APP WRAPPER -->
+
+
+    <!-- FOOTER -->
+    <footer class="footer text-center">Copyright © 2019 Gravitas International. All rights reserved.</footer>
+    <!-- END FOOTER -->
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/adminAssets/js/axios.min.js"></script>
+    <script>
+        axios.get('/icoDashboard/siteConfiguration/project/<%=projectName %>/getSiteConfiguration')
+            .then(function (response) {
+                // console.log("hello ", response.data.data);
+                document.getElementsByName('site_name')[0].value = response.data.data.siteName;
+                document.getElementsByName('coin_name')[0].value = response.data.data.coinSymbol;
+                document.getElementsByName('token_supply')[0].value = response.data.data.tokenSupply;
+                document.getElementsByName('soft_cap')[0].value = response.data.data.softCap;
+                document.getElementsByName('hard_cap')[0].value = response.data.data.hardCap;
+                document.getElementsByName("contract_address")[0].value = response.data.data.tokenContractAddress;
+                document.getElementsByName("crowdsale_address")[0].value = response.data.data.crowdsaleContractAddress;
+                document.getElementsByName("website_url")[0].value = response.data.data.homeURL;
+                document.getElementById("imglogo").src = response.data.data.siteLogo;
+                document.getElementsByName('start_date')[0].value = response.data.data.startDate.slice(0, 10);
+                document.getElementsByName("end_date")[0].value = response.data.data.endDate.slice(0, 10);
+                document.getElementsByName("minimum_contribution")[0].value = response.data.data.minimumContribution;
+                // console.log(response.data.data.siteLogo,response.data)
+
+            })
+            .catch(function (e) {
+                console.log(e);
+            });
+    </script>
+    </body>
+
+    </html>

@@ -1,0 +1,172 @@
+<body>
+  <% layout('./layouts/sidebar') -%>
+  <div class="preloader">
+    <div class="lds-ripple">
+      <div class="lds-pos"></div>
+      <div class="lds-pos"></div>
+    </div>
+  </div>
+  <!-- Page wrapper  -->
+  <div class="page-wrapper">
+
+    <!-- Container fluid  -->
+    <!-- Container fluid  -->
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Create Contract</h4>
+          <div class="row">
+            <div class="col-md-8">
+              <% if (message.length >0) { %>
+              <div class="alert alert-danger">
+                <%= message %>
+              </div>
+              <a href="/buyPackage" class="btn btn-danger btn-sm">Buy your package here</a>
+              <% } %>
+              <% if (message2.length >0) { %>
+                <div class="alert alert-danger">
+                  <%= message2 %>
+                </div>
+                <% } %>
+              <form class="form-horizontal m-t-20" id="createContract" action="/createERC721" method="post">
+                <div class="form-group">
+                  <label for="tokenName">Token Name</label>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="token_name" name="token_name" placeholder="Enter Token Name">
+                    <div class="input-group-append">
+                      <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter name of the project without spaces, usually 5-25 symbols. Lower and uppercase can be used"><i class="ti-help-alt"></i></button>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="tokenSymbol">Token Symbol</label>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="token_symbol" id="token_symbol" placeholder="Enter Token Symbol">
+                    <div class="input-group-append">
+                      <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Enter Token Symbol (eg. CK)"><i class="ti-help-alt"></i></button>
+
+                    </div>
+                  </div>
+                </div>
+
+                <hr>
+
+
+                <h4>Advanced Functionalities</h4>
+                <div class="row mb-4 ml-1">
+                                        <div class="checkbox-btn" data-toggle="buttons">
+                                          <!-- <label class="btn btn-checkbox mr-2">
+                                              <input type="checkbox" name="isMetadata" autocomplete="off"> Metadata Support
+                                          </label>
+                                          <label class="btn btn-checkbox mr-2">
+                                              <input type="checkbox" name="isEnumerable" autocomplete="off"> Enumerable
+                                          </label> -->
+                                            <label class="btn btn-checkbox mr-2">
+                                                <input type="checkbox" name="isPausable" autocomplete="off"> Pausable
+                                            </label>
+                                            <label class="btn btn-checkbox mr-2">
+                                                <input type="checkbox" name="isBurnable" autocomplete="off"> Burnable
+                                            </label>
+                                            <label class="btn btn-checkbox mr-2">
+                                                <input type="checkbox" name="isOwnable" autocomplete="off"> Ownable
+                                            </label>
+											<button type="button" class="btn btn-circle btn-tooltip mt-minus-5" data-toggle="modal" data-target="#RUBMModal" data-whatever="@getbootstrap"><i class="ti-help-alt"></i></button>
+                                        </div>
+                                    </div>
+
+                <div class="form-actions mb-3">
+                  <button type="button" id="submitButton" class="btn btn-rounded btn-lg btn-info mr-1" onclick="submitForm()">CREATE</button>
+                  <!-- <button type="button" class="btn btn-rounded btn-lg btn-light">Cancel</button> -->
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- End Container fluid  -->
+
+
+  <!-- RUBM modal -->
+  <div class="modal fade bs-example-modal-lg" id="RUBMModal" tabindex="-1" role="dialog" aria-labelledby="RUBMModalLabel1">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="myModalLabel">Modal Heading</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mb-3"><span>Pausable</span></h5>
+                                                <p>Pausing token transfer during some initial period (e.g. while a crowdsale is taking place), to enable pause/release
+                                                  transfers</p>
+
+                                                <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Burnable</span></h5>
+                                                <p>Keeps the token’s “totalSupply” value up to date, Useful in case someone wants to burn some tokens to reduce
+                                                  the supply for their project or burn unsold tokens</p>
+
+                                                <h5 class="line-on-side text-dark text-center font-small-3 mx-2 mt-4"><span>Ownable</span></h5>
+                                                <p> Allows for Contract Ownership Transfers</p>
+                                            </div>
+                                            <div class="modal-footer text-center">
+                    							<button type="button" class="btn btn-rounded btn-info" data-dismiss="modal">Close</button>
+                							</div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <!-- / RUBM modal -->
+
+  </div>
+</body>
+<script>
+  window.setTimeout(function() {
+    if (window.sessionStorage.getItem("tokenName")) {
+      $("#token_name").val(window.sessionStorage.getItem("tokenName"));
+      $("#token_symbol").val(window.sessionStorage.getItem("tokenSymbol"));
+      $("#token_decimals").val(window.sessionStorage.getItem("tokenDecimals"));
+      $("#token_supply").val(window.sessionStorage.getItem("tokenSupply"));
+      $("#token_sale").val(window.sessionStorage.getItem("tokenSale"));
+      $("#eth_tokens").val(window.sessionStorage.getItem("ethTokens"));
+    }
+  }, 1000);
+
+  function submitForm() {
+    window.sessionStorage.setItem("tokenName", $("#token_name").val());
+    window.sessionStorage.setItem("tokenSymbol", $("#token_symbol").val());
+    window.sessionStorage.setItem("tokenDecimals", $("#token_decimals").val());
+    window.sessionStorage.setItem("tokenSupply", $("#token_supply").val());
+    window.sessionStorage.setItem("tokenSale", $("#token_sale").val());
+    window.sessionStorage.setItem("ethTokens", $("#eth_tokens").val());
+    // window.sessionStorage.setItem("tokenName", )
+    $("#createContract").submit();
+  }
+</script>
+<script src="assets/libs/bootstrap-switch/bootstrap-switch.min.js"></script>
+<script>
+  $(".bt-switch input[type='checkbox'], .bt-switch input[type='radio']").bootstrapSwitch();
+  var radioswitch = function() {
+    var bt = function() {
+      $(".radio-switch").on("switch-change", function() {
+        $(".radio-switch").bootstrapSwitch("toggleRadioState")
+      }), $(".radio-switch").on("switch-change", function() {
+        $(".radio-switch").bootstrapSwitch("toggleRadioStateAllowUncheck")
+      }), $(".radio-switch").on("switch-change", function() {
+        $(".radio-switch").bootstrapSwitch("toggleRadioStateAllowUncheck", !1)
+      })
+    };
+    return {
+      init: function() {
+        bt()
+      }
+    }
+  }();
+  $(document).ready(function() {
+    radioswitch.init()
+  });
+</script>
+
+</html>

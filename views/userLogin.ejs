@@ -1,0 +1,197 @@
+<html lang="en">
+
+<head>
+  <title><%= projectName %></title>
+
+  <!-- Favicon Icon -->
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
+  <script src="/cdn-cgi/apps/head/lf7pRreZSj1Ob_rNBjPMzJCbyXs.js"></script>
+  <script src="https://www.googletagmanager.com/gtag/js?id=UA-124166989-1"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="../../assets/images/favicon.png">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+  <!-- Animation CSS -->
+  <link rel="stylesheet" href="../../icoAssets/css/animate.css">
+  <!-- Latest Bootstrap min CSS -->
+  <link rel="stylesheet" href="../../icoAssets/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="../../icoAssets/css/font-awesome.min.css">
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="../../icoAssets/css/style.css">
+  <link rel="stylesheet" href="../../icoAssets/css/responsive.css">
+  <link rel="stylesheet" href="../../icoAssets/css/admin.css">
+  <link href="../../icoAssets/popup/popup-styles.css" rel="stylesheet">
+
+</head>
+
+
+<body class="v_light_dark login page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-content-white loaded" data-spy="scroll" data-offset="110">
+  <div class="parallax-mirror" style="visibility: visible; z-index: 1; position: fixed; top: -146px; left: 0px; overflow: hidden; transform: translate3d(0px, 0px, 0px); height: 208px; width: 731px;"></div>
+
+  <!-- START LOADER -->
+  <div id="loader-wrapper">
+    <div id="loading-center-absolute">
+      <div class="object" id="object_four"></div>
+      <div class="object" id="object_three"></div>
+      <div class="object" id="object_two"></div>
+      <div class="object" id="object_one"></div>
+    </div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+
+  </div>
+  <!-- Navigation -->
+
+
+  <div class="clearfix"> </div>
+
+  <!-- END SECTION BANNER -->
+  <!-- START SECTION SIGN UP -->
+  <section class="small_pt small_pb">
+    <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="authorize_box">
+                <div class="alert alert-danger" style="display:none" id="message"></div>
+                <div class="title_dark title_border text-center">
+                  <h4 class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style="animation-delay: 0.2s; opacity: 1;">Welcome</h4>
+                  <p class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style="animation-delay: 0.4s; opacity: 1;">Sign in to your Account</p>
+                </div>
+                <div class="field_form authorize_form">
+                  <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.6s" style="animation-delay: 0.6s; opacity: 1;">
+                    <input type="email" class="form-control" required="" placeholder="Email" name="email" id="email">
+                  </div>
+                  <div class="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.7s" style="animation-delay: 0.7s; opacity: 1;">
+                    <input type="password" class="form-control" required="" placeholder="Password" name="password" id="password">
+                  </div>
+                  <div class="form-group col-md-12 text-center animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1s" style="animation-delay: 1s; opacity: 1;">
+                    <button class="btn btn-default" id="submit_btn" onclick=login()>Sign in</button>
+                  </div>
+                </div>
+              </div>
+              <div class="divider xsmall_divider"></div>
+              <div class="text-center">
+                <span class="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1s" style="animation-delay: 1s; opacity: 1;">Need an account? <a href="./userSignup">Signup</a></span>
+              </div>
+            </div>
+          </div>
+    </div>
+
+  </section>
+  <!-- END SECTION SIGN UP -->
+  <!-- / latest exchanges -->
+
+  <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+  <% include partials/icoScripts %>
+  <style type="text/css">
+    .login-box-body {
+      position: relative;
+    }
+  </style>
+  <script type="text/javascript">
+    $("#subscribe_form").validate({
+      rules: {
+        email: {
+          required: true,
+          email: true
+        },
+      },
+      messages: {
+        email: {
+          required: 'Email is required',
+          email: 'Enter valid email'
+        },
+      }
+    });
+  </script>
+  <!--selectpicker ends-->
+
+  <script type="text/javascript">
+    $.validator.addMethod(
+      "regex",
+      function(value, element, regexp) {
+        var re = new RegExp(regexp);
+        return this.optional(element) || re.test(value);
+      },
+      "Number Not valid."
+    );
+
+    $("#register_form").validate({
+      rules: {
+
+        email_id: {
+          required: true,
+          email: true
+        },
+        country_id: {
+          required: true
+        },
+        password: {
+          required: true,
+          noSpace: true,
+        },
+        password_confirmation: {
+          required: true,
+          equalTo: '#password',
+        },
+
+      },
+      messages: {
+        first_name: {
+          required: 'First name is required',
+          minlength: 'First name should contain atleast two alphabets',
+          maxlength: 'First name should not exceed than 500 characters',
+          regex: 'Only alphabets allowed'
+        },
+        last_name: {
+          required: 'Last name is required',
+          minlength: 'Last name should contain atleast two alphabets',
+          maxlength: 'Last name should not exceed than 500 characters',
+          regex: 'Only alphabets allowed'
+        },
+        password: {
+          required: 'Password is required',
+        },
+        password_confirmation: {
+          required: 'Password Confirmation is required',
+          equalTo: 'Password does not match',
+        },
+
+      }
+    });
+    jQuery.validator.addMethod("noSpace", function(value, element) {
+      return value.indexOf(" ") < 0 && value != "";
+    }, "No space please and don't leave it empty");
+  </script>
+  <script>
+    function login() {
+      var xhttp = new XMLHttpRequest();
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+      var projectName = "<%= projectName %>";
+      var parameters = "email=" + email + "&password=" + password + "&projectName=" + projectName;
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          if (xhttp.responseText == -1) {
+
+          } else {
+            var res = JSON.parse(xhttp.responseText);
+            if (res.token == "failure") {
+              console.log(res);
+              $('#message').get(0).style.display="";
+              $('#message').html(res.message);
+            } else {
+              
+              window.location.assign('./user/dashboard');
+            }
+          }
+        }
+      }
+
+      xhttp.open("POST", "./userLogin", true);
+      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhttp.send(parameters);
+    }
+  </script>
