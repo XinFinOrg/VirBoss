@@ -359,8 +359,8 @@
 		})
 	});
 	var $ = a("#particles-js"),
-		aa = "#1b6b88",
-		ea = "#27b79a";
+		aa = "#984669",
+		ea = "#f0b501";
 	i.hasClass("io-zinnia") && (aa = "#fff", ea = "#fff"), $.length > 0 && particlesJS("particles-js", {
 		particles: {
 			number: {
