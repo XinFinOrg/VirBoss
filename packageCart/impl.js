@@ -264,7 +264,7 @@ module.exports = {
             "insurance": "0"
           }
         },
-        description: "Gravitas Package 1",
+        description: "Viroboss Package 1",
         invoice_number: Math.floor(Math.random() * Math.floor(10000000000000)),
         payment_options: {
           allowed_payment_method: 'INSTANT_FUNDING_SOURCE'
@@ -273,7 +273,7 @@ module.exports = {
         "item_list": {
           "items": [
             {
-              "name": "Gravitas Package 1",
+              "name": "Viroboss Package 1",
               "description": req.user.email,
               "quantity": "1",
               "price": "1500",
