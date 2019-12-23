@@ -39,7 +39,7 @@
 }
 
 
-.header-price-box{line-height:25px;background:#eef5f9;margin:8px;padding:8px;border-radius:10px;}
+.header-price-box{line-height:25px;background:#fbf9f3;margin:8px;padding:8px;border-radius:10px;}
 .header-price-box img {max-width:22px;}
 .header-buy-tokens{margin:12px;}
 
@@ -520,14 +520,13 @@ input:checked + .slider {
 
 /*====================== Left Sidebar Gradient Css Starts ========================*/
 .ps-container {height: 100%;}
-#main-wrapper[data-layout=vertical] .topbar .top-navbar .navbar-header[data-logobg=skin1], #main-wrapper[data-layout=horizontal] .topbar .top-navbar .navbar-header[data-logobg=skin1] {background: #FFFFFF;}
+#main-wrapper[data-layout=vertical] .topbar .top-navbar .navbar-header[data-logobg=skin1], #main-wrapper[data-layout=horizontal] .topbar .top-navbar .navbar-header[data-logobg=skin1] {background: #ac5077;}
 #main-wrapper[data-layout=vertical][data-sidebar-position=fixed] .left-sidebar{
-	background: #6078ea;
-	background: -moz-linear-gradient(top, #27b79a 10%,#1b6b88 100%);
-	background: -webkit-linear-gradient(top, #27b79a 10%,#1b6b88 100%);
-	background: linear-gradient(to bottom, #27b79a 10%,#1b6b88 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#27b79a', endColorstr='#1b6b88',GradientType=0 );
-}
+background: #984669;
+background: -moz-linear-gradient(top, #984669 10%,#53233d 100%);
+background: -webkit-linear-gradient(top, #984669 10%,#53233d 100%);
+background: linear-gradient(to bottom, #984669 10%,#53233d 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#984669', endColorstr='#53233d',GradientType=0 );}
 /*====================== Left Sidebar Gradient Css Ends ========================*/
 
 .no-top-border{border-top:none;}
