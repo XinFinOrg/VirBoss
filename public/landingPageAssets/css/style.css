@@ -242,7 +242,7 @@ h1, h2, h3, h4, h5, h6, blockquote {
   bottom: 0;
   z-index: 10000; }
   .theme-light #preloader {
-    background-color: #179fff; }
+    background-color: #984669; }
 
 .color-primary {
   color: #46bdf4; }
@@ -4402,7 +4402,7 @@ label.error {
   margin: -35px 0 0 -35px;
   border-radius: 50%;
   border: 2px solid transparent;
-  border-top-color: #46bdf4;
+  border-top-color: #cb5cef;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
   z-index: 1001; }
@@ -4416,7 +4416,7 @@ label.error {
   bottom: 5px;
   border-radius: 50%;
   border: 3px solid transparent;
-  border-top-color: #7a0fff;
+  border-top-color: #f0b501;
   -webkit-animation: spin 3s linear infinite;
   animation: spin 3s linear infinite; }
 
@@ -4429,7 +4429,7 @@ label.error {
   bottom: 15px;
   border-radius: 50%;
   border: 3px solid transparent;
-  border-top-color: #1b6b88;
+  border-top-color: #984669;
   -webkit-animation: spin 1.5s linear infinite;
   animation: spin 1.5s linear infinite; }
 
@@ -7160,7 +7160,7 @@ label.error {
   font-size: .6em;
   margin-left: 5px; }
 .io-jasmine .loader-section {
-  background: #e7edf5; }
+  background: #fbf9f3; }
 .io-jasmine .subscribe-results {
   padding: 7px 20px; }
 

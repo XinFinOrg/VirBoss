@@ -24,7 +24,7 @@
                   <% } %>
                     <form class="form-horizontal m-t-20" id="createContract" action="/createERC223Contract" method="post">
                       <div class="form-group">
-                        <label for="tokenName">Token Name</label>
+                        <label for="tokenName">Coin Name</label>
                         <div class="input-group mb-3">
                           <input type="text" class="form-control" id="token_name" name="token_name" placeholder="Enter Token Name">
                           <div class="input-group-append">
@@ -37,7 +37,7 @@
                       </div>
 
                       <div class="form-group">
-                        <label for="tokenSymbol">Token Symbol</label>
+                        <label for="tokenSymbol">Coin Symbol</label>
                         <div class="input-group mb-3">
                           <input type="text" class="form-control" name="token_symbol" id="token_symbol" placeholder="Enter Token Symbol">
                           <div class="input-group-append">
@@ -50,7 +50,7 @@
                       </div>
 
                       <div class="form-group">
-                        <label for="tokenDecimals">Token Decimals</label>
+                        <label for="tokenDecimals">Coin Decimals</label>
                         <div class="input-group mb-3">
                           <input type="text" class="form-control" name="token_decimals" id="token_decimals" value="18">
                           <div class="input-group-append">
@@ -62,9 +62,19 @@
                         <span class="alert-danger" id="token_decimals_error"></span>
                       </div>
 
-                      <hr>
-
                       <div class="form-group">
+                        <label for="tokenValue">Coin Value</label>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="token_value" id="token_value" value="USDT0.10">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Coin Value : USDT0.10"><i class="ti-help-alt"></i></button>
+
+                          </div>
+                        </div>
+                        <span class="alert-danger" id="token_decimals_error"></span>
+                      </div>
+
+                      <!--<div class="form-group">
                         <label for="totalSupply">Total Supply</label>
                         <div class="input-group mb-3">
                           <input type="text" class="form-control" name="token_supply" id="token_supply" placeholder="Enter Total Supply">
@@ -75,9 +85,60 @@
                           </div>
                         </div>
                         <span class="alert-danger" id="token_supply_error"></span>
+                      </div>-->
+					  
+					  <div class="form-group">
+                      	<label for="totalSupply">Total Supply</label>
+							<div class="input-group mb-3">
+								<select id="token_supply" name="token_supply" class="form-control">
+									<option value="0" selected>Select Total Supply</option>
+									<option value="1">5,00,000</option>
+									<option value="2">40,00,000</option>
+									<option value="3">1,00,00,000</option>
+									<option value="4">10,00,00,000</option>
+									<option value="5">25,00,00,000</option>
+									<option value="6">1,00,00,00,000</option>
+									<option value="7">10,00,00,00,000</option>
+								</select>
+							<div class="input-group-append">
+                            	<button type="button" class="btn btn-circle btn-tooltip" data-toggle="tooltip" data-placement="left" title="" data-original-title="Select Total Supply from dropdown (eg. 5,00,000)"><i class="ti-help-alt"></i></button>
+                            </div>
+					  	</div>
+						<span class="alert-danger" id="token_supply_error"></span>
                       </div>
+									
+					  <div class="form-group">
+					  		<div class="ts-details d1">
+								<p>1 Coin = USDT0.01</p>
+								<p>Fees = 1,000VN <span>(USDT100)</span></p>
+							</div>
+							<div class="ts-details d2">
+								<p>1 Coin = USDT0.01</p>
+								<p>Fees = 5,000VN <span>(USDT500)</span></p>
+							</div>
+							<div class="ts-details d3">
+								<p>1 Coin = USDT0.01</p>
+								<p>Fees = 10,000VN <span>(USDT1000)</span></p>
+							</div>
+							<div class="ts-details d4">
+								<p>1 Coin = USDT0.01</p>
+								<p>Fees = 50,000VN <span>(USDT5000)</span></p>
+							</div>
+							<div class="ts-details d5">
+								<p>1 Coin = USDT0.01</p>
+								<p>Fees = 100,000VN <span>(USDT10,000)</span></p>
+							</div>
+							<div class="ts-details d6">
+								<p>1 Coin = USDT0.01</p>
+								<p>Fees = 250,000VN <span>(USDT25,000)</span></p>
+							</div>
+							<div class="ts-details d7">
+								<p>1 Coin = USDT0.01</p>
+								<p>Fees = 500,000VN <span>(USDT50,000)</span></p>
+					  		</div>
+					  </div>
 
-                      <div class="form-group">
+                      <!--<div class="form-group">
                         <label for="1ETHTokens">1 ETH = ? <span id="tokenname">Tokens</span></label>
                         <div class="input-group mb-3">
                           <input type="text" class="form-control" name="eth_tokens" id="eth_tokens" placeholder="Enter token value in ETH">
@@ -136,7 +197,7 @@
                               class="ti-help-alt"></i></button>
                         </div>
                       </div>
-                      <hr>
+                      <hr>-->
 
                       <div class="form-actions mb-3">
                         <button type="button" id="submitButton" class="btn btn-rounded btn-lg btn-info mr-1" onclick="submitForm()">CREATE</button>
@@ -312,6 +373,19 @@
       document.getElementById("submitButton").disabled = "";
     }
   }
+</script>
+
+<script>
+//function for total supply data dropdown
+	$(function () {
+		$('.ts-details').hide();
+		//$('.d2').show();
+		
+		$('#token_supply').on("change",function () {
+			$('.ts-details').hide();
+			$('.d'+$(this).val()).show();
+		}).val("0");
+	});
 </script>
 
 </html>
