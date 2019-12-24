@@ -43,7 +43,7 @@
 .header-price-box img {max-width:22px;}
 .header-buy-tokens{margin:12px;}
 
-.modal-title.buy-tokens{font-size:18px;font-weight: 400;color: #fff;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;margin-left: -1rem;max-width: 90%;margin-right: 2%;background-color: #27b79a;padding: 1em 2em .8em 1em;border-top-right-radius: 2.9em;border-bottom-right-radius: 2.9em;box-sizing: border-box;}
+.modal-title.buy-tokens{font-size:18px;font-weight: 400;color: #fff;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;margin-left: -1rem;max-width: 90%;margin-right: 2%;background-color: #f0b501;padding: 1em 2em .8em 1em;border-top-right-radius: 2.9em;border-bottom-right-radius: 2.9em;box-sizing: border-box;}
 .modal-title.buy-tokens i{margin-right:10px;}
 
 .download-QRcode{display: inline-block;border: 1px dashed #c7d8e9;background-color: #FFFFFF;margin-bottom: 30px;}
@@ -219,7 +219,7 @@ input:checked + .slider {
   transition: all 0.4s ease-in-out 0s;
   width: 100%;
   margin: 0px;
-  background-color: #36cccb;
+  background-color: #cd6b52;
   padding-bottom: 40px;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -356,7 +356,7 @@ input:checked + .slider {
   font-weight: 500;
 }
 .clpricing-table .price-table.style10 .price-1 {
-  border-bottom: 7px solid #27b79a;
+  border-bottom: 7px solid #984669;
 }
 .clpricing-table .price-table.style10 .price-1 .top {
   color: #bfc946;
@@ -380,10 +380,10 @@ input:checked + .slider {
   color: #ffffff;
 }
 .clpricing-table .price-table.style10 .price-1 .bottom .btn-table:hover {
-  color: #1b6b88 !important;
+  color: #984669 !important;
 }
 .clpricing-table .price-table.style10 .price-1:hover {
-  background: #27b79a;
+  background: #984669;
 }
 .clpricing-table .price-table.style10 .price-1:hover .btn-table {
   border: 2px solid #ffffff;
