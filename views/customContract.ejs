@@ -77,7 +77,8 @@
                           <!-- <input type="text" class="form-control" name="token_supply" id="token_supply" placeholder="Enter Total Supply"> -->
                           <div class="input-group mb-3">
 								<select id="token_supply" name="token_supply" class="form-control">
-									<option value="500000" selected>500,000</option>
+                  <option value="0" selected>Select Total Supply</option>
+									<option value="500000">500,000</option>
 									<option value="4000000">4,000,000</option>
 									<option value="10000000">10,000,000</option>
 									<option value="100000000">100,000,000</option>
@@ -200,7 +201,15 @@
 
     </div>
 </body>
+<script src="assets/libs/bootstrap-switch/bootstrap-switch.min.js"></script>
 <script>
+
+
+  let validTokenName=false, validTokenSymbol=false ,
+  validTokenDecimal=false, validTokenSupply=false,
+  validEthValue=false, validPercentage=false,
+  validContribution=false;
+
   window.setTimeout(function () {
     if (window.sessionStorage.getItem("tokenName")) {
       $("#token_name").val(window.sessionStorage.getItem("tokenName"));
@@ -212,6 +221,7 @@
     }
   }, 1000);
   function submitForm() {
+    console.log("Token Supply: ", $("#token_supply").val());
     window.sessionStorage.setItem("tokenName", $("#token_name").val());
     window.sessionStorage.setItem("tokenSymbol", $("#token_symbol").val());
     window.sessionStorage.setItem("tokenDecimals", $("#token_decimals").val());
@@ -221,9 +231,6 @@
     // window.sessionStorage.setItem("tokenName", )
     $("#createContract").submit();
   }
-</script>
-<script src="assets/libs/bootstrap-switch/bootstrap-switch.min.js"></script>
-<script>
   $(".bt-switch input[type='checkbox'], .bt-switch input[type='radio']").bootstrapSwitch();
   var radioswitch = function () {
     var bt = function () {
@@ -244,80 +251,147 @@
   $(document).ready(function () {
     radioswitch.init()
   });
-</script>
-<script>
+
   document.getElementById("submitButton").disabled = "disabled";
  
   var myInput2 = document.getElementById("eth_tokens");
   myInput2.onkeyup = function () {
     if (myInput2.value % 1 != 0 || myInput2.value < 1 || myInput2.value.indexOf(" ") == 0) {
       document.getElementById("eth_tokens_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
-      document.getElementById("submitButton").disabled = "disabled";
+      validEthValue=false;
     } else {
       document.getElementById("eth_tokens_error").innerHTML = '';
-      document.getElementById("submitButton").disabled = "";
+      validEthValue=true;
     }
+    canSubmit();
   }
-  var myInput3 = document.getElementById("token_supply");
-  myInput3.onkeyup = function () {
-    if (myInput3.value % 1 != 0 || myInput3.value < 1 || myInput3.value.indexOf(" ") == 0) {
-      document.getElementById("token_supply_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
-      document.getElementById("submitButton").disabled = "disabled";
+
+  $("#token_supply").on("change",function(){
+    const selectedOption = this.value;
+    console.log('Current token supply value: ', selectedOption, $("#token_supply option:selected").text());
+      if (selectedOption==0) {
+      document.getElementById("token_supply_error").innerHTML = 'Please select an option';
+      validTokenSupply=false;
     } else {
       document.getElementById("token_supply_error").innerHTML = '';
-      document.getElementById("submitButton").disabled = "";
+      validTokenSupply=true
     }
-  }
+    canSubmit()
+  })
+
   var myInput4 = document.getElementById("token_decimals");
   myInput4.onkeyup = function () {
     if (myInput4.value % 1 != 0 || myInput4.value < 1 || myInput4.value.indexOf(" ") == 0) {
       document.getElementById("token_decimals_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
-      document.getElementById("submitButton").disabled = "disabled";
+      validTokenDecimal=false;
     } else {
       document.getElementById("token_decimals_error").innerHTML = '';
-      document.getElementById("submitButton").disabled = "";
+      validTokenDecimal=true;
     }
+    canSubmit();
   }
   var myInput5 = document.getElementById("bonus_rate");
   str = myInput5.value.toString();
   myInput5.onkeyup = function () {
-    if (myInput5.value % 1 != 0 || myInput5.value < 0 || str.match(/%/) || myInput5.value.indexOf(" ") == 0) {
+    if (myInput5.value.length===0||myInput5.value % 1 != 0 || myInput5.value < 0 || str.match(/%/) || myInput5.value.indexOf(" ") == 0) {
       document.getElementById("bonus_rate_error").innerHTML = 'Number should not contain decimal or % & should be greater then -1';
-      document.getElementById("submitButton").disabled = "disabled";
+      validPercentage=false;
     } else {
       document.getElementById("bonus_rate_error").innerHTML = '';
-      document.getElementById("submitButton").disabled = "";
+      validPercentage=true
     }
+    canSubmit();
   }
   var myInput6 = document.getElementById("token_symbol");
   myInput6.onkeyup = function () {
-    if (myInput6.value.indexOf(" ") == 0) {
+    if (myInput6.value.length===0||myInput6.value.indexOf(" ") == 0) {
       document.getElementById("token_symbol_error").innerHTML = 'Enter Valid String';
-      document.getElementById("submitButton").disabled = "disabled";
+      validTokenSymbol=false;
     } else {
-      document.getElementById("tokenname").innerHTML = myInput6.value;
       document.getElementById("token_symbol_error").innerHTML = '';
-      document.getElementById("submitButton").disabled = "";
+      validTokenSymbol=true;
     }
+    canSubmit()
   }
   var myInput7 = document.getElementById("token_name");
   myInput7.onkeyup = function () {
-    if (myInput7.value.indexOf(" ") == 0) {
+    if (myInput7.value.length===0||myInput7.value.indexOf(" ") == 0) {
       document.getElementById("token_name_error").innerHTML = 'Enter Valid String';
-      document.getElementById("submitButton").disabled = "disabled";
+      validTokenName=false;
     } else {
       document.getElementById("token_name_error").innerHTML = '';
-      document.getElementById("submitButton").disabled = "";
+      validTokenName=true;
     }
+    canSubmit();
   }
   var myInput8 = document.getElementById("minimum_contribution");
   myInput8.onkeyup = function () {
     if (myInput8.value % 1 != 0 || myInput8.value < 1 || myInput8.value.indexOf(" ") == 0) {
       document.getElementById("minimum_contribution_error").innerHTML = 'Enter Valid Number';
-      document.getElementById("submitButton").disabled = "disabled";
+      validContribution=false;
     } else {
       document.getElementById("minimum_contribution_error").innerHTML = '';
-      document.getElementById("submitButton").disabled = "";
+      validContribution=true;
+    }
+    canSubmit();
+  }
+
+
+  // performing the initial check
+  if (myInput2.value % 1 != 0 || myInput2.value < 1 || myInput2.value.indexOf(" ") == 0) {
+      validEthValue=false;
+    } else {
+      document.getElementById("eth_tokens_error").innerHTML = '';
+      validEthValue=true;
+    }
+  if (myInput5.value.length===0|| myInput5.value % 1 != 0 || myInput5.value < 0 || str.match(/%/) || myInput5.value.indexOf(" ") == 0) {
+      validPercentage=false;
+    } else {
+      document.getElementById("bonus_rate_error").innerHTML = '';
+      validPercentage=true
+    }
+  if (myInput7.value.length===0||myInput7.value.indexOf(" ") == 0) {
+    validTokenName=false
+    } else {
+    document.getElementById("token_name_error").innerHTML = '';
+    validTokenName=true;
+  }
+  if (myInput6.value.length===0||myInput6.value.indexOf(" ") == 0) {
+    validTokenSymbol=false;
+   } else {
+    document.getElementById("token_symbol_error").innerHTML = '';
+    validTokenSymbol=true;
+  }
+  if (myInput4.value % 1 != 0 || myInput4.value < 1 || myInput4.value.indexOf(" ") == 0) {
+    validTokenDecimal=false;
+   } else {
+    document.getElementById("token_decimals_error").innerHTML = '';
+    validTokenDecimal=true;
+  }
+  if (myInput8.value % 1 != 0 || myInput8.value < 1 || myInput8.value.indexOf(" ") == 0) {
+      validContribution=false;
+    } else {
+      document.getElementById("minimum_contribution_error").innerHTML = '';
+      validContribution=true;
+    }
+  
+  if ($("#token_supply option:selected").val()==0){
+    validTokenSupply=false;
+  }else{
+    validTokenSupply=true;
+  }
+
+
+  canSubmit();
+
+
+  function canSubmit() {
+    if (validContribution && validEthValue && validPercentage && validTokenDecimal && validTokenName && validTokenSupply && validTokenSymbol){
+      document.getElementById("submitButton").disabled=false
+      return true;
+    }else{
+      document.getElementById("submitButton").disabled="disabled"
+      return false;
     }
   }
 </script>
