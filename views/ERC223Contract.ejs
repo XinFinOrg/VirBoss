@@ -62,7 +62,7 @@
                         <span class="alert-danger" id="token_decimals_error"></span>
                       </div>
 
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <label for="tokenValue">Coin Value</label>
                         <div class="input-group mb-3">
                           <input type="text" class="form-control" name="token_value" id="token_value" value="USDT0.10">
@@ -72,7 +72,7 @@
                           </div>
                         </div>
                         <span class="alert-danger" id="token_decimals_error"></span>
-                      </div>
+                      </div> -->
 
                       <!--<div class="form-group">
                         <label for="totalSupply">Total Supply</label>
@@ -106,38 +106,38 @@
 						<span class="alert-danger" id="token_supply_error"></span>
                       </div>
 									
-					  <div class="form-group">
-					  		<div class="ts-details d1">
-								<p>1 Coin = USDT0.01</p>
-								<p>Fees = 1,000VN <span>(USDT100)</span></p>
-							</div>
-							<div class="ts-details d2">
-								<p>1 Coin = USDT0.01</p>
-								<p>Fees = 5,000VN <span>(USDT500)</span></p>
-							</div>
-							<div class="ts-details d3">
-								<p>1 Coin = USDT0.01</p>
-								<p>Fees = 10,000VN <span>(USDT1000)</span></p>
-							</div>
-							<div class="ts-details d4">
-								<p>1 Coin = USDT0.01</p>
-								<p>Fees = 50,000VN <span>(USDT5000)</span></p>
-							</div>
-							<div class="ts-details d5">
-								<p>1 Coin = USDT0.01</p>
-								<p>Fees = 100,000VN <span>(USDT10,000)</span></p>
-							</div>
-							<div class="ts-details d6">
-								<p>1 Coin = USDT0.01</p>
-								<p>Fees = 250,000VN <span>(USDT25,000)</span></p>
-							</div>
-							<div class="ts-details d7">
-								<p>1 Coin = USDT0.01</p>
-								<p>Fees = 500,000VN <span>(USDT50,000)</span></p>
-					  		</div>
-					  </div>
+                      <div class="form-group">
+                        <div class="ts-details d500000">
+                        <p>1 Coin = USDT0.1</p>
+                        <p>Fees = 1,000VN <span>(USDT100)</span></p>
+                      </div>
+                      <div class="ts-details d4000000">
+                        <p>1 Coin = USDT0.1</p>
+                        <p>Fees = 5,000VN <span>(USDT500)</span></p>
+                      </div>
+                      <div class="ts-details d10000000">
+                        <p>1 Coin = USDT0.1</p>
+                        <p>Fees = 10,000VN <span>(USDT1000)</span></p>
+                      </div>
+                      <div class="ts-details d100000000">
+                        <p>1 Coin = USDT0.1</p>
+                        <p>Fees = 50,000VN <span>(USDT5000)</span></p>
+                      </div>
+                      <div class="ts-details d250000000">
+                        <p>1 Coin = USDT0.1</p>
+                        <p>Fees = 100,000VN <span>(USDT10,000)</span></p>
+                      </div>
+                      <div class="ts-details d1000000000">
+                        <p>1 Coin = USDT0.1</p>
+                        <p>Fees = 250,000VN <span>(USDT25,000)</span></p>
+                      </div>
+                      <div class="ts-details d10000000000">
+                        <p>1 Coin = USDT0.1</p>
+                        <p>Fees = 500,000VN <span>(USDT50,000)</span></p>
+                        </div>
+                    </div>
 
-                      <!--<div class="form-group">
+                      <!-- <div class="form-group">
                         <label for="1ETHTokens">1 ETH = ? <span id="tokenname">Tokens</span></label>
                         <div class="input-group mb-3">
                           <input type="text" class="form-control" name="eth_tokens" id="eth_tokens" placeholder="Enter token value in ETH">
@@ -174,7 +174,7 @@
                           </div>
                         </div>
                         <span class="alert-danger" id="minimum_contribution_error"></span>
-                      </div>
+                      </div> -->
                       <hr>
 
                       <h4>Advanced Functionalities</h4><br>
@@ -196,7 +196,7 @@
                               class="ti-help-alt"></i></button>
                         </div>
                       </div>
-                      <hr>-->
+                      <hr>
 
                       <div class="form-actions mb-3">
                         <button type="button" id="submitButton" class="btn btn-rounded btn-lg btn-info mr-1" onclick="submitForm()">CREATE</button>
@@ -264,14 +264,6 @@
 
   function submitForm() {
     console.log("called submit form");
-    // const currTokenSupply =  parseInt($("#token_supply option:selected").text().replace(/\,/g,""));
-    // console.log("CurrTokenSupply: ", currTokenSupply)
-    // const elemTokenSupply =   document.createElement("input");
-    // elemTokenSupply.setAttribute("name","token_supply");
-    // elemTokenSupply.setAttribute("value",currTokenSupply);
-    // $("token_supply_container").add(elemTokenSupply);
-    // console.log("token_supply: ", $("#token_supply").val());
-    consoel.log("Token Supply: ",document.getElementById("token_supply"))
     window.sessionStorage.setItem("tokenName", $("#token_name").val());
     window.sessionStorage.setItem("tokenSymbol", $("#token_symbol").val());
     window.sessionStorage.setItem("tokenDecimals", $("#token_decimals").val());

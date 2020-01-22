@@ -94,7 +94,39 @@
                         <span class="alert-danger" id="token_supply_error"></span>
                       </div>
 
+
                       <div class="form-group">
+                        <div class="ts-details d500000">
+                        <p>1 Coin = USDT0.1</p>
+                        <p>Fees = 1,000VN <span>(USDT100)</span></p>
+                      </div>
+                      <div class="ts-details d4000000">
+                        <p>1 Coin = USDT0.1</p>
+                        <p>Fees = 5,000VN <span>(USDT500)</span></p>
+                      </div>
+                      <div class="ts-details d10000000">
+                        <p>1 Coin = USDT0.1</p>
+                        <p>Fees = 10,000VN <span>(USDT1000)</span></p>
+                      </div>
+                      <div class="ts-details d100000000">
+                        <p>1 Coin = USDT0.1</p>
+                        <p>Fees = 50,000VN <span>(USDT5000)</span></p>
+                      </div>
+                      <div class="ts-details d250000000">
+                        <p>1 Coin = USDT0.1</p>
+                        <p>Fees = 100,000VN <span>(USDT10,000)</span></p>
+                      </div>
+                      <div class="ts-details d1000000000">
+                        <p>1 Coin = USDT0.1</p>
+                        <p>Fees = 250,000VN <span>(USDT25,000)</span></p>
+                      </div>
+                      <div class="ts-details d10000000000">
+                        <p>1 Coin = USDT0.1</p>
+                        <p>Fees = 500,000VN <span>(USDT50,000)</span></p>
+                        </div>
+                    </div>
+
+                      <!-- <div class="form-group">
                         <label for="1ETHTokens">1 ETH = ? <span id="tokenname"></span></label>
                         <div class="input-group mb-3">
                           <input type="text" class="form-control" name="eth_tokens" id="eth_tokens" placeholder="1 ETH = ? Tokens"><br>
@@ -104,8 +136,8 @@
                           </div>
                         </div>
                         <span class="alert-danger" id="eth_tokens_error"></span>
-                      </div>
-                      <div class="form-group">
+                      </div> -->
+                      <!-- <div class="form-group">
                         <label for="bonus_rate">Bonus Percentage</label>
                         <div class="input-group mb-3">
 
@@ -116,8 +148,8 @@
                           </div>
                         </div>
                         <span class="alert-danger" id="bonus_rate_error"></span>
-                      </div>
-                      <div class="form-group">
+                      </div> -->
+                      <!-- <div class="form-group">
                         <label for="bonus_rate">Minimum Contribution</label>
                         <div class="input-group mb-3">
 
@@ -128,7 +160,7 @@
                           </div>
                         </div>
                         <span class="alert-danger" id="minimum_contribution_error"></span>
-                      </div>
+                      </div> -->
                       <hr>
 
                       <h4>Advanced Functionalities (all are seleted as a default.)</h4><br>
@@ -206,9 +238,9 @@
 
 
   let validTokenName=false, validTokenSymbol=false ,
-  validTokenDecimal=false, validTokenSupply=false,
-  validEthValue=false, validPercentage=false,
-  validContribution=false;
+  validTokenDecimal=false, validTokenSupply=false;
+  // validEthValue=false, validPercentage=false,
+  // validContribution=false;
 
   window.setTimeout(function () {
     if (window.sessionStorage.getItem("tokenName")) {
@@ -217,7 +249,7 @@
       $("#token_decimals").val(window.sessionStorage.getItem("tokenDecimals"));
       $("#token_supply").val(window.sessionStorage.getItem("tokenSupply"));
       $("#token_sale").val(window.sessionStorage.getItem("tokenSale"));
-      $("#eth_tokens").val(window.sessionStorage.getItem("ethTokens"));
+      // $("#eth_tokens").val(window.sessionStorage.getItem("ethTokens"));
     }
   }, 1000);
   function submitForm() {
@@ -227,7 +259,7 @@
     window.sessionStorage.setItem("tokenDecimals", $("#token_decimals").val());
     window.sessionStorage.setItem("tokenSupply", $("#token_supply").val());
     window.sessionStorage.setItem("tokenSale", $("#token_sale").val());
-    window.sessionStorage.setItem("ethTokens", $("#eth_tokens").val());
+    // window.sessionStorage.setItem("ethTokens", $("#eth_tokens").val());
     // window.sessionStorage.setItem("tokenName", )
     $("#createContract").submit();
   }
@@ -254,17 +286,17 @@
 
   document.getElementById("submitButton").disabled = "disabled";
  
-  var myInput2 = document.getElementById("eth_tokens");
-  myInput2.onkeyup = function () {
-    if (myInput2.value % 1 != 0 || myInput2.value < 1 || myInput2.value.indexOf(" ") == 0) {
-      document.getElementById("eth_tokens_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
-      validEthValue=false;
-    } else {
-      document.getElementById("eth_tokens_error").innerHTML = '';
-      validEthValue=true;
-    }
-    canSubmit();
-  }
+  // var myInput2 = document.getElementById("eth_tokens");
+  // myInput2.onkeyup = function () {
+  //   if (myInput2.value % 1 != 0 || myInput2.value < 1 || myInput2.value.indexOf(" ") == 0) {
+  //     document.getElementById("eth_tokens_error").innerHTML = 'Number should not contain decimal or should be greater then 0';
+  //     validEthValue=false;
+  //   } else {
+  //     document.getElementById("eth_tokens_error").innerHTML = '';
+  //     validEthValue=true;
+  //   }
+  //   canSubmit();
+  // }
 
   $("#token_supply").on("change",function(){
     const selectedOption = this.value;
@@ -290,18 +322,18 @@
     }
     canSubmit();
   }
-  var myInput5 = document.getElementById("bonus_rate");
-  str = myInput5.value.toString();
-  myInput5.onkeyup = function () {
-    if (myInput5.value.length===0||myInput5.value % 1 != 0 || myInput5.value < 0 || str.match(/%/) || myInput5.value.indexOf(" ") == 0) {
-      document.getElementById("bonus_rate_error").innerHTML = 'Number should not contain decimal or % & should be greater then -1';
-      validPercentage=false;
-    } else {
-      document.getElementById("bonus_rate_error").innerHTML = '';
-      validPercentage=true
-    }
-    canSubmit();
-  }
+  // var myInput5 = document.getElementById("bonus_rate");
+  // str = myInput5.value.toString();
+  // myInput5.onkeyup = function () {
+  //   if (myInput5.value.length===0||myInput5.value % 1 != 0 || myInput5.value < 0 || str.match(/%/) || myInput5.value.indexOf(" ") == 0) {
+  //     document.getElementById("bonus_rate_error").innerHTML = 'Number should not contain decimal or % & should be greater then -1';
+  //     validPercentage=false;
+  //   } else {
+  //     document.getElementById("bonus_rate_error").innerHTML = '';
+  //     validPercentage=true
+  //   }
+  //   canSubmit();
+  // }
   var myInput6 = document.getElementById("token_symbol");
   myInput6.onkeyup = function () {
     if (myInput6.value.length===0||myInput6.value.indexOf(" ") == 0) {
@@ -324,32 +356,32 @@
     }
     canSubmit();
   }
-  var myInput8 = document.getElementById("minimum_contribution");
-  myInput8.onkeyup = function () {
-    if (myInput8.value % 1 != 0 || myInput8.value < 1 || myInput8.value.indexOf(" ") == 0) {
-      document.getElementById("minimum_contribution_error").innerHTML = 'Enter Valid Number';
-      validContribution=false;
-    } else {
-      document.getElementById("minimum_contribution_error").innerHTML = '';
-      validContribution=true;
-    }
-    canSubmit();
-  }
+  // var myInput8 = document.getElementById("minimum_contribution");
+  // myInput8.onkeyup = function () {
+  //   if (myInput8.value % 1 != 0 || myInput8.value < 1 || myInput8.value.indexOf(" ") == 0) {
+  //     document.getElementById("minimum_contribution_error").innerHTML = 'Enter Valid Number';
+  //     validContribution=false;
+  //   } else {
+  //     document.getElementById("minimum_contribution_error").innerHTML = '';
+  //     validContribution=true;
+  //   }
+  //   canSubmit();
+  // }
 
 
   // performing the initial check
-  if (myInput2.value % 1 != 0 || myInput2.value < 1 || myInput2.value.indexOf(" ") == 0) {
-      validEthValue=false;
-    } else {
-      document.getElementById("eth_tokens_error").innerHTML = '';
-      validEthValue=true;
-    }
-  if (myInput5.value.length===0|| myInput5.value % 1 != 0 || myInput5.value < 0 || str.match(/%/) || myInput5.value.indexOf(" ") == 0) {
-      validPercentage=false;
-    } else {
-      document.getElementById("bonus_rate_error").innerHTML = '';
-      validPercentage=true
-    }
+  // if (myInput2.value % 1 != 0 || myInput2.value < 1 || myInput2.value.indexOf(" ") == 0) {
+  //     validEthValue=false;
+  //   } else {
+  //     document.getElementById("eth_tokens_error").innerHTML = '';
+  //     validEthValue=true;
+  //   }
+  // if (myInput5.value.length===0|| myInput5.value % 1 != 0 || myInput5.value < 0 || str.match(/%/) || myInput5.value.indexOf(" ") == 0) {
+  //     validPercentage=false;
+  //   } else {
+  //     document.getElementById("bonus_rate_error").innerHTML = '';
+  //     validPercentage=true
+  //   }
   if (myInput7.value.length===0||myInput7.value.indexOf(" ") == 0) {
     validTokenName=false
     } else {
@@ -368,12 +400,12 @@
     document.getElementById("token_decimals_error").innerHTML = '';
     validTokenDecimal=true;
   }
-  if (myInput8.value % 1 != 0 || myInput8.value < 1 || myInput8.value.indexOf(" ") == 0) {
-      validContribution=false;
-    } else {
-      document.getElementById("minimum_contribution_error").innerHTML = '';
-      validContribution=true;
-    }
+  // if (myInput8.value % 1 != 0 || myInput8.value < 1 || myInput8.value.indexOf(" ") == 0) {
+  //     validContribution=false;
+  //   } else {
+  //     document.getElementById("minimum_contribution_error").innerHTML = '';
+  //     validContribution=true;
+  //   }
   
   if ($("#token_supply option:selected").val()==0){
     validTokenSupply=false;
@@ -386,7 +418,8 @@
 
 
   function canSubmit() {
-    if (validContribution && validEthValue && validPercentage && validTokenDecimal && validTokenName && validTokenSupply && validTokenSymbol){
+    // if (validContribution && validEthValue && validPercentage && validTokenDecimal && validTokenName && validTokenSupply && validTokenSymbol){
+      if ( validTokenDecimal && validTokenName && validTokenSupply && validTokenSymbol){
       document.getElementById("submitButton").disabled=false
       return true;
     }else{
@@ -403,7 +436,7 @@
 		//$('.d2').show();
 		
 		$('#token_supply').on("change",function () {
-			$('.ts-details').hide();
+      $('.ts-details').hide();
 			$('.d'+$(this).val()).show();
 		}).val("0");
 	});

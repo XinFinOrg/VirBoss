@@ -156,28 +156,7 @@
               </ul>
             </li>
             <!-- <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="authentication-login1.html" aria-expanded="false"><i class="fa fa-calendar-check"></i><span class="hide-menu">Ongoing Projects </span></a></li> -->
-            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark sidebar-link"
-                href="javascript:void(0)" aria-expanded="false"><i class="fa fa-cog"></i><span class="hide-menu">Deploy
-                  Pending Contracts </span></a>
-              <ul aria-expanded="false" class="collapse first-level">
-                <% if (ProjectConfiguration.length>0) { %>
-                <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-                <%  if(ProjectConfiguration.tokenContractAddress == 'Deployment is in process' && ProjectConfiguration.tokenContractAddress == 'null') {%>
-                <!-- <li class="sidebar-item"><a href="/generatedContract"
-                        class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li> -->
-                <li id="deployment" onclick='deploy( "<%- ProjectConfiguration.coinName %>",false)'
-                  class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i
-                      class="mdi mdi-adjust"></i><span class="hide-menu"><%- ProjectConfiguration.coinName %></span></a>
-                </li>
-                <% }else{%>
-                <% } %>
-                <% }) %>
-                <% } else { %>
-                <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i
-                      class="mdi mdi-adjust"></i><span class="hide-menu">No Projects Yet </span></a></li>
-                <% } %>
-              </ul>
-            </li>
+            
             <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark sidebar-link"
               href="javascript:void(0)" aria-expanded="false"><i class="fa fa-cog"></i><span class="hide-menu">Deployed
                  Contracts </span></a>
@@ -188,7 +167,7 @@
               <!-- <li class="sidebar-item"><a href="/generatedContract"
                       class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li> -->
               <li id="deployment" onclick='getExplorerURL( "<%- ProjectConfiguration.networkType %>","<%- ProjectConfiguration.tokenContractAddress %>")'
-                class="sidebar-item"><a href="javascript:void(0)" target="_blank" class="sidebar-link"><i
+                class="sidebar-item"><a class="sidebar-link"><i
                     class="mdi mdi-adjust"></i><span class="hide-menu"><%- ProjectConfiguration.coinName %></span></a>
               </li>
               <% }else{%>
@@ -320,18 +299,19 @@
         else { window.location.href = "/deployer?coinName=" + coinName; }
       }
       function getExplorerURL(networkType,tokenContractAddress) {
-        console.log(networkType,tokenContractAddress, "here")
+        console.log(networkType,tokenContractAddress, "here");
+        let newTabUrl="";
         if (networkType="apothem"){
-          window.location.href = "https://explorer.apothem.network/token/xdc" + tokenContractAddress.substring(2)
+          newTabUrl = "https://explorer.apothem.network/token/xdc" + tokenContractAddress.substring(2)
         }
         else if (networkType="mainnet"){
-          window.location.href = "https://explorer.xinfin.network/token/xdc" + tokenContractAddress.substring(2)
+          newTabUrl = "https://explorer.xinfin.network/token/xdc" + tokenContractAddress.substring(2)
         }
         else if (networkType="testnet"){
-          window.location.href = "https://ropsten.etherscan.io/token/" + tokenContractAddress
+          newTabUrl = "https://ropsten.etherscan.io/token/" + tokenContractAddress
         }
         else {
-          window.location.href = "https://etherscan.io/token/" + tokenContractAddress
+          newTabUrl = "https://etherscan.io/token/" + tokenContractAddress
         }
         // window.sessionStorage.setItem("deploymentName", coinName);
         // if (!istoken) { window.location.href = "/deployer"; }
