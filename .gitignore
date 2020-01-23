@@ -7,4 +7,3 @@ logs/
 config/
 package-lock.json
 contractcreator/ERC1400contracts
-contractCreator/ERC223contracts

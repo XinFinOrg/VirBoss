@@ -150,12 +150,12 @@ module.exports = {
       objdata.coinName = req.body.token_name;
       objdata.tokenSupply = req.body.token_supply;
       objdata.coinSymbol = req.body.token_symbol;
-      objdata.hardCap = req.body.token_sale;
-      objdata.ETHRate = req.body.eth_tokens;
+      objdata.hardCap = req.body.token_sale; // not paseed
+      objdata.ETHRate = req.body.eth_tokens; // not passed
       objdata.tokenContractCode = data;
-      objdata.bonusRate = req.body.bonus_rate == '' ? 0 : req.body.bonus_rate;
-      objdata.bonusStatus = req.body.bonus_rate == null ? true : false;
-      objdata.minimumContribution = req.body.minimum_contribution;
+      objdata.bonusRate = req.body.bonus_rate == '' ? 0 : req.body.bonus_rate; // not passed
+      objdata.bonusStatus = req.body.bonus_rate == null ? true : false; // not passed
+      objdata.minimumContribution = req.body.minimum_contribution; // not passed
       objdata.isAllowedForICOboolean = true;
       Promise.all([generateEthAddress(), generateBTCAddress()]).then(async ([createdEthAddress, createdBTCAddress]) => {
         var projectData = await ProjectConfiguration.create(objdata)
@@ -256,12 +256,12 @@ module.exports = {
       objdata.coinName = req.body.token_name;
       objdata.tokenSupply = req.body.token_supply;
       objdata.coinSymbol = req.body.token_symbol;
-      objdata.hardCap = req.body.token_sale;
-      objdata.ETHRate = req.body.eth_tokens;
+      objdata.hardCap = req.body.token_sale; // not passed
+      objdata.ETHRate = req.body.eth_tokens; // not passed
       objdata.tokenContractCode = data;
-      objdata.bonusRate = req.body.bonus_rate == '' ? 0 : req.body.bonus_rate;
-      objdata.bonusStatus = req.body.bonus_rate == null ? true : false;
-      objdata.minimumContribution = req.body.minimum_contribution;
+      objdata.bonusRate = req.body.bonus_rate == '' ? 0 : req.body.bonus_rate; // not passed
+      objdata.bonusStatus = req.body.bonus_rate == null ? true : false; // not passed
+      objdata.minimumContribution = req.body.minimum_contribution; // not passed
       Promise.all([generateEthAddress(), generateBTCAddress()]).then(async ([createdEthAddress, createdBTCAddress]) => {
         var projectData = await ProjectConfiguration.create(objdata)
         await clientdata.addProjectConfiguration(projectData);

@@ -80,8 +80,8 @@
                               <th>Coin Name</th>
                               <th>Token Contract Address</th>
                               <th>Token Contract Tx Hash</th>
-                              <th>Crowdsale Contract Address</th>
-                              <th>CrowdSale Contract Tx Hash</th>
+                              <!-- <th>Crowdsale Contract Address</th>
+                              <th>CrowdSale Contract Tx Hash</th> -->
                             </tr>
                           </thead>
                           <tbody>
@@ -112,17 +112,7 @@
                                     <% } %>         
                                   <% } else { %>
                                     <td colspan="2"> Not deployed yet
-                                      <% } %>
-                                        <% if(ProjectConfiguration.crowdsaleContractAddress) {%>
-                                          <td>
-                                            <%= ProjectConfiguration.crowdsaleContractAddress %>
-                                          </td>
-                                          <td><a href="https://etherscan.io/tx/<%= ProjectConfiguration.crowdsaleContractHash %>"
-                                              target="_blank">Click here
-                                            </a> </td>
-                                          <% } else { %>
-                                            <td colspan="2"> Not deployed yet
-                                              <% } %>
+                                      <% } %>                                        
                               </tr>
                               <% }) %>
                           </tbody>
