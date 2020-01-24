@@ -42,7 +42,7 @@ module.exports = {
         byteCode = projectData.crowdsaleByteCode;
         if (byteCode == null) {
           // console.log(projectData.ETHRate, projectData.bonusRate=="" ? 0:projectData.bonusRate, address, projectData.tokenContractAddress, projectData.bonusStatus,"hello");
-          byteCode = await solc.compile(projectData.crowdsaleContractCode, 1).contracts[':Crowdsale'];
+          byteCode = await solc.compile(projectData.crowdsaleContractCode).contracts[':Crowdsale'];
           byteCode.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, eth_address[0].address, projectData.tokenContractAddress, projectData.bonusStatus]).slice(2)
           projectData.crowdsaleByteCode = byteCode.bytecode;
           projectData.crowdsaleABICode = byteCode.interface;
@@ -52,7 +52,7 @@ module.exports = {
       } else {
         byteCode = projectData.tokenByteCode;
         if (byteCode == null) {
-          byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin'] //solc.compile(projectData.tokenContractCode, 1).contracts[':Coin'].bytecode;
+          byteCode = await solc.compile(projectData.tokenContractCode).contracts[':Coin'] //solc.compile(projectData.tokenContractCode).contracts[':Coin'].bytecode;
           projectData.tokenByteCode = byteCode.bytecode;
           projectData.tokenABICode = byteCode.interface;
           byteCode = byteCode.bytecode
@@ -181,7 +181,7 @@ module.exports = {
         privateICOhandler.sendEther(accountData.address, '0x06f05b59d3b20000')
           .then(async r => {
             console.log(r, "here 1")
-            byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
+            byteCode = await solc.compile(projectData.tokenContractCode).contracts[':Coin']
             projectData.tokenByteCode = byteCode.bytecode;
             projectData.tokenABICode = byteCode.interface;
             privateICOhandler.sendTransaction(accountData.address, byteCode.bytecode, accountData.privateKey)
@@ -199,7 +199,7 @@ module.exports = {
                 //   "IERC20": IERC20,
                 // }, async (err, data) => {
                 //   nodemailerservice.sendContractEmail(req.user.email, data, req.query.coinName, "Crowdsale Contract");
-                //   byteCode2 = await solc.compile(data, 1).contracts[':Crowdsale'];
+                //   byteCode2 = await solc.compile(data).contracts[':Crowdsale'];
                 //   byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', "0x" + tokenReceipt.contractAddress.substring(3), projectData.bonusStatus]).slice(2)
                 //   projectData.crowdsaleByteCode = byteCode2.bytecode;
                 //   projectData.crowdsaleABICode = byteCode2.interface;
@@ -231,7 +231,7 @@ module.exports = {
         apothemICOhandler.sendEther(accountData.address, '0x06f05b59d3b20000')
           .then(async r => {
             console.log(r, "here 1")
-            byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
+            byteCode = await solc.compile(projectData.tokenContractCode).contracts[':Coin']
             projectData.tokenByteCode = byteCode.bytecode;
             projectData.tokenABICode = byteCode.interface;
             apothemICOhandler.sendTransaction(accountData.address, byteCode.bytecode, accountData.privateKey)
@@ -249,7 +249,7 @@ module.exports = {
                 //   "IERC20": IERC20,
                 // }, async (err, data) => {
                 //   nodemailerservice.sendContractEmail(req.user.email, data, req.query.coinName, "Crowdsale Contract");
-                //   byteCode2 = await solc.compile(data, 1).contracts[':Crowdsale'];
+                //   byteCode2 = await solc.compile(data).contracts[':Crowdsale'];
                 //   byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', "0x" + tokenReceipt.contractAddress.substring(3), projectData.bonusStatus]).slice(2)
                 //   projectData.crowdsaleByteCode = byteCode2.bytecode;
                 //   projectData.crowdsaleABICode = byteCode2.interface;
@@ -280,7 +280,7 @@ module.exports = {
       try {
         etherRopstenICOhandler.sendEther(accountData.address, '0x06f05b59d3b20000')
           .then(async r => {
-            byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
+            byteCode = await solc.compile(projectData.tokenContractCode).contracts[':Coin']
             projectData.tokenByteCode = byteCode.bytecode;
             projectData.tokenABICode = byteCode.interface;
             etherRopstenICOhandler.sendTransaction(accountData.address, byteCode.bytecode, accountData.privateKey)
@@ -297,7 +297,7 @@ module.exports = {
                 //   "SafeMath": SafeMath,
                 // }, async (err, data) => {
                 //   nodemailerservice.sendContractEmail(req.user.email, data, req.query.coinName, "Crowdsale Contract");
-                //   byteCode2 = await solc.compile(data, 1).contracts[':Crowdsale'];
+                //   byteCode2 = await solc.compile(data).contracts[':Crowdsale'];
                 //   byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', tokenReceipt.contractAddress, projectData.bonusStatus]).slice(2)
                 //   projectData.crowdsaleByteCode = byteCode2.bytecode;
                 //   projectData.crowdsaleABICode = byteCode2.interface;
@@ -326,7 +326,7 @@ module.exports = {
       try {
         etherMainnetICOhandler.sendEther(accountData.address, '0x2386F26FC10000')
           .then(async r => {
-            byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
+            byteCode = await solc.compile(projectData.tokenContractCode).contracts[':Coin']
             projectData.tokenByteCode = byteCode.bytecode;
             projectData.tokenABICode = byteCode.interface;
             etherMainnetICOhandler.sendTransaction(accountData.address, byteCode.bytecode, accountData.privateKey)
@@ -343,7 +343,7 @@ module.exports = {
                 //   "IERC20": IERC20,                  
                 // }, async (err, data) => {
                 //   nodemailerservice.sendContractEmail(req.user.email, data, req.query.coinName, "Crowdsale Contract");
-                //   byteCode2 = await solc.compile(data, 1).contracts[':Crowdsale'];
+                //   byteCode2 = await solc.compile(data).contracts[':Crowdsale'];
                 //   byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', tokenReceipt.contractAddress, projectData.bonusStatus]).slice(2)
                 //   projectData.crowdsaleByteCode = byteCode2.bytecode;
                 //   projectData.crowdsaleABICode = byteCode2.interface;
@@ -371,7 +371,7 @@ module.exports = {
       // try {
         
       //   console.log(accountData, "heello")
-      //   byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
+      //   byteCode = await solc.compile(projectData.tokenContractCode).contracts[':Coin']
       //   projectData.tokenByteCode = byteCode.bytecode;
       //   projectData.tokenABICode = byteCode.interface;
       //   etherMainnetICOhandler.sendTransaction(accountData.address, byteCode.bytecode, accountData.privateKey)
@@ -387,7 +387,7 @@ module.exports = {
       //         "IERC20": IERC20,
       //       }, async (err, data) => {
       //         nodemailerservice.sendContractEmail(req.user.email, data, req.query.coinName, "Crowdsale Contract");
-      //         byteCode2 = await solc.compile(data, 1).contracts[':Crowdsale'];
+      //         byteCode2 = await solc.compile(data).contracts[':Crowdsale'];
       //         byteCode2.bytecode += web3.eth.abi.encodeParameters(['uint256', 'uint256', 'address', 'address', 'bool'], [projectData.ETHRate, projectData.bonusRate, '0x14649976AEB09419343A54ea130b6a21Ec337772', tokenReceipt.contractAddress, projectData.bonusStatus]).slice(2)
       //         projectData.crowdsaleByteCode = byteCode2.bytecod
       //         e;
