@@ -1,0 +1,80 @@
+.fact-tile {
+  .bigNumber {
+    font-weight: 400;
+    font-size: 40px;
+    display: inline;
+    color:$primary-color;
+  }
+
+  .bigNumberLabel {
+    margin-left: 10px;
+    color:$primary-bg;
+  }
+
+  .new-blue {
+    color: $new-blue;
+  }
+
+  .new-blue-dark {
+    color: $new-dark-blue;
+  }
+
+  .orange {
+    color: $orange-color-top;
+  }
+
+  .orange-dark {
+    color: $orange-color-bottom;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: auto auto;
+
+    div {
+      display: inline;
+    }
+  }
+
+  .contract-tile-label,
+  .address-tile-label {
+    color: $primary-color;
+    font-size: 12px;
+  }
+
+  .contract-tile-value,
+  .address-tile-value {
+    text-align: right;
+    font-size: 14px;
+    color: $primary-bg;
+    width: 100%;
+    overflow: auto;
+  }
+
+  .equal-height {
+    .card {
+      height: 170px;
+
+
+    }
+  }
+
+  .equal-width {
+    .card {
+      @media (max-width:762px) {
+        width: 300px;
+      }
+    }
+  }
+
+  .logo {
+    width: 15px;
+    height: 15px;
+  }
+
+  .inline-right {
+    width: 100%;
+    text-align: right;
+  }
+
+}

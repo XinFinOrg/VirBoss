@@ -38,6 +38,18 @@ module.exports = function (app) {
   app.post('/adminLogin', superAdminimpl.postadminLogin);
   app.get('/adminDashboard', superAdminimpl.adminDashboard);
 
+  app.get("/api/currentUser", (req, res) => {
+    console.log("called /api/currentUser");
+    if (req.isAuthenticated()) {
+      res.json({ status: true, email: req.user.email });
+    } else {
+      res.json({ status: false, email: "" });
+    }
+  });
+
+  app.post("/api/getPrivateKey",isLoggedIn, impl.getPrivateKey)
+  app.post("/api/getProjectKey",isLoggedIn, impl.getProjectKey)
+
 };
 
 // route middleware to make sure a user is logged in

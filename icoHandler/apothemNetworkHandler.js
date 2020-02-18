@@ -1,12 +1,32 @@
 var db = require('../database/models/index');
 var config = require('../config/paymentListener');
+const Web3 = require('web3');
 var balance = require('crypto-balances');
 let Promise = require('bluebird');
-const Web3 = require('web3');
-var web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.apothem.network'));
+let provider = new Web3.providers.HttpProvider('https://rpc.apothem.network');
+var web3 = new Web3(provider);
+
+// setInterval(web3HeartBeat, 60000);
+
+// web3.eth.net.isListening().then((s) => {
+//   console.log("status check apothem: ",s);
+//   return s
+// }).catch((e) => {
+//   return S
+// });
+
+// function web3HeartBeat(){
+//   web3.eth.net.isListening().then((s) => {
+//     console.log('We\'re still connected to the apothem node');
+//   }).catch((e) => {
+//     console.log('Lost connection to the node, reconnecting');
+//     provider = new Web3.providers.HttpProvider('https://rpc.apothem.network');
+//     web3.setProvider(provider);
+//   });
+// }
+
 var axios = require("axios");
-
-
+const siteConfig = db.siteConfig;
 
 module.exports = {
   checkTokenBalance: async (address, tokenAddress) => {
@@ -31,25 +51,17 @@ module.exports = {
     });
   },
   sendEther: async (address, amount) => {
-    var mainPrivateKey = '0x045c29d1fd2a4158d839ebc85bf69c819a115223a0785b626d9b38d3cda5d5d4';
-    var txData = {
+    return new Promise(async function(resolve, reject) {
+    const currConfig = await siteConfig.findOne();
+    const apothemPrivkey = currConfig.dataValues.apothemPrivKey;
+    let txData = {
       "to": address,
       "value": amount, // "0x06f05b59d3b200000"
-    }
-    return new Promise(async function(resolve, reject) {
+    };
       web3.eth.estimateGas(txData).then(gasLimit => {
         txData["gasLimit"] = gasLimit;
-        txData["gasPrice"] = gasLimit;
-        console.log("txData",txData);
-        
-        web3.eth.accounts.signTransaction(txData, mainPrivateKey).then(result => {
-          // web3.eth.sendSignedTransaction(result.rawTransaction)
-          //   .on('receipt', async function(receipt) {
-          //     resolve(receipt)
-          //   })
-          //   .on('error', async function(error) {
-          //     reject(error)
-          //   })
+        // txData["gasPrice"] = gasLimit;        
+        web3.eth.accounts.signTransaction(txData, apothemPrivkey).then(result => {
           console.log("SignedTransaction",result);
           axios({
               method: 'post',
@@ -87,16 +99,12 @@ module.exports = {
                   }).then(function(response) {
                     resolve(response.data.result)
                   })
-                  .catch(function(response) {
-                    //handle error
-                    // console.log(response);
+                  .catch(function(response) {                    
                     reject(response.data)
                   });
               }, 50000);
             })
             .catch(function(response) {
-              //handle error
-              // console.log(response);
               reject(response.data)
             });
         })

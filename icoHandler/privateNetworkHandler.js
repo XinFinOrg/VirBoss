@@ -5,8 +5,9 @@ let Promise = require('bluebird');
 const Web3 = require('web3');
 var web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.xinfin.network'));
 var apothemweb3 = new Web3(new Web3.providers.HttpProvider('https://rpc.apothem.network'));
-var axios = require("axios");
 
+var axios = require("axios");
+const siteConfig = db.siteConfig;
 
 
 module.exports = {
@@ -43,26 +44,23 @@ module.exports = {
       resolve(decimals);
     });
   },
-  sendEther: async (address, amount) => {
-    var mainPrivateKey = '0x045c29d1fd2a4158d839ebc85bf69c819a115223a0785b626d9b38d3cda5d5d4';
+  sendEther: async (address, amount) => {    
+    return new Promise(async function(resolve, reject) {
+
+// var mainPrivateKey = '0x045c29d1fd2a4158d839ebc85bf69c819a115223a0785b626d9b38d3cda5d5d4';
+
+    const currConfig = await siteConfig.findOne();
+    const mainPrivateKey = currConfig.dataValues.xinfinPrivKey;
     var txData = {
       "to": address,
       "value": amount, // "0x06f05b59d3b200000"
     }
-    return new Promise(async function(resolve, reject) {
       web3.eth.estimateGas(txData).then(gasLimit => {
         txData["gasLimit"] = gasLimit;
         txData["gasPrice"] = gasLimit;
         console.log("txData",txData);
         
         web3.eth.accounts.signTransaction(txData, mainPrivateKey).then(result => {
-          // web3.eth.sendSignedTransaction(result.rawTransaction)
-          //   .on('receipt', async function(receipt) {
-          //     resolve(receipt)
-          //   })
-          //   .on('error', async function(error) {
-          //     reject(error)
-          //   })
           console.log("SignedTransaction",result);
           axios({
               method: 'post',
@@ -79,8 +77,7 @@ module.exports = {
                 }
               }
             })
-            .then(function(response) {
-              //handle success
+            .then(function(response) {              
               console.log(response.data.result, "ews");
               setTimeout(function() {
                 axios({
@@ -101,15 +98,11 @@ module.exports = {
                     resolve(response.data.result)
                   })
                   .catch(function(response) {
-                    //handle error
-                    // console.log(response);
                     reject(response.data)
                   });
               }, 50000);
             })
             .catch(function(response) {
-              //handle error
-              // console.log(response);
               reject(response.data)
             });
         })

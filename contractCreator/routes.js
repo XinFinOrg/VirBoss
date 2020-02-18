@@ -1,5 +1,6 @@
 const impl = require("./impl");
 var db = require('../database/models/index');
+const packagePrice = db.siteConfig;
 var client = db.client;
 
 
@@ -60,8 +61,13 @@ function hasPackage1(req, res, next) {
     if (result.package1 > 0) {
       return next();
     } else {
-      req.flash('package_flash', "You need to buy Package 1 by contributing 1200000 XDCe");
-      res.redirect('/generatedContract');
+      try{
+        const currPackPrice = await packagePrice.findOne();
+        req.flash('package_flash', `You need to buy Package 1 by contributing ${currPackPrice.dataValues.packagePrice} Viro`);
+        res.redirect('/generatedContract');
+      }catch(e){
+        console.log("exception ar contractCreator.routes.hasPackage1: ", e);
+      }
     }
   });
 }
