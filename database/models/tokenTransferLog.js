@@ -1,3 +1,4 @@
+// not  required
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const tokenTransferLog = sequelize.define('tokenTransferLog', {

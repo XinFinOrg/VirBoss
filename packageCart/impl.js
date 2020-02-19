@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 var configAuth = require('../config/auth');
 var db = require('../database/models/index');
 var client = db.client;
+const config = require("../config/paymentListener");
 var paymentListener = require('./paymentListener');
 var auth = require('../config/auth')
 var ProjectConfiguration = db.projectConfiguration;
@@ -11,9 +12,14 @@ var paypal = require('paypal-rest-sdk');
 var axios = require('axios');
 paypal.configure(auth.paypal);
 
+const packagePrice = db.siteConfig;
+
+const tknTransferBP = db.tokenTransferBuyPackage;
+
 module.exports = {
   buyPackage: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
+    const currPackPrice = await packagePrice.findOne();
     var address = req.cookies['address'];
     var otpExist = false;
     if (req.user.paymentOTP) {
@@ -27,6 +33,7 @@ module.exports = {
         balance: balance,
         ProjectConfiguration: projectArray,
         otpField: otpExist,
+        packagePrice: currPackPrice.dataValues.packagePrice
       });
     });
   },
@@ -59,22 +66,21 @@ module.exports = {
               'address': addressCookie
             }
           }).then(address => {
-            console.log(address, "address");
-            Promise.all([paymentListener.checkBalance(address.address)]).then(([balance]) => {
-              if (balance >= 1200000) {
-                var receipt = paymentListener.sendToParent(address.address, address.privateKey);
+            Promise.all([paymentListener.checkBalance(address.address)]).then( async ([balance]) => {
+              const currPackPrice = await packagePrice.findOne();
+              if (balance >= parseFloat(currPackPrice.dataValues.packagePrice)) {
+                var receipt = paymentListener.sendToParent(address.address, address.privateKey, result.dataValues.uniqueId);
                 paymentListener.attachListener(address.address);
-                req.flash('package_flash', 'Successfully initiated payment. You will be shortly alloted package credits');
+                res.json({status:true,message: 'Successfully initiated payment. You will be shortly alloted package credits'});
               } else {
-                req.flash('package_flash', 'Insufficient funds to buy Package');
-              }
-              res.redirect('/dashboard');
+                res.json({status:false,error: 'Insufficient funds to buy Package'});
+              }              
             });
           })
         }
         else {
           console.log(false)
-          res.send({ status: false });
+          res.json({ status: false, error: "Wrong OTP!" });
         }
       })
     }
@@ -104,10 +110,9 @@ module.exports = {
         expiresIn: 60 * 3
       });
     //Send back the token to the user
-    res.cookie('paymentToken', token, {
+    return res.cookie('paymentToken', token, {
       expire: 3600 + Date.now()
-    });
-    return res.json({
+    }).json({
       'token': "success"
     });
   },

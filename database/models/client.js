@@ -7,6 +7,11 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
     },
+    acntType:{
+      type:DataTypes.INTEGER,
+      allowNull:true,
+      defaultValue:0
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -82,7 +87,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     kycDoc1:
     {
-      type:DataTypes.STRING
+      type:DataTypes.TEXT
     },
     kycDocName2:
     {
@@ -90,7 +95,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     kycDoc2:
     {
-      type:DataTypes.STRING,
+      type:DataTypes.TEXT,
     },
     kycDocName3:
     {
@@ -98,7 +103,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     kycDoc3:
     {
-      type:DataTypes.STRING
+      type:DataTypes.TEXT,
     },
     paymentOTP:
     {
@@ -114,6 +119,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       defaultValue:DataTypes.NOW
     },
+    blacklisted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue:false
+    },
+    lastActive: {
+      type: DataTypes.STRING
+    }
 }, {});
   client.associate = function (models) {
     client.hasMany(models.projectConfiguration,

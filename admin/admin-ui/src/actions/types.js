@@ -1,0 +1,9 @@
+export const FETCH_USER = "fetch_user";
+export const FETCH_ALL_USER = "fetch_all_users";
+export const FETCH_ALL_PROJECT = "fetch_all_project";
+export const FETCH_ALL_REFERRAL_LOG = "fetch_all_referral_log";
+export const FETCH_ALL_USER_CURRENCY = "fetch_all_user_currency";
+export const FETCH_TOKEN_TRANSFER_ROLLOUT = "fetch_token_transfer_rollout";
+export const FETCH_TOKEN_TRANSFER_TOKEN_BUY = "fetch_token_transfer_token_buy";
+export const FETCH_TOKEN_TRANSFER_BUY_PACK = "fetch_token_transfer_buy_package";
+export const FETCH_PROJECT_CONFIG = "fetch_project_config";

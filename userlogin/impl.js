@@ -2,6 +2,8 @@ var passport = require('passport');
 var db = require('../database/models/index');
 var client = db.client;
 var ProjectConfiguration = db.projectConfiguration;
+const userAddressDB = db.userCurrencyAddress;
+const { Op } = require('sequelize')
 // var fs = require('fs');
 var path = require('path');
 // var paymentListener = require('../packageCart/paymentListener');
@@ -10,6 +12,7 @@ var mailer = require('../emailer/impl');
 const ImageDataURI = require('image-data-uri');
 const readChunk = require('read-chunk');
 const fileType = require('file-type');
+const _ = require("lodash");
 var fs = require('fs');
 module.exports = {
 
@@ -53,11 +56,10 @@ module.exports = {
       }).then(async client => {
         var addresses = await client.getUserCurrencyAddresses();
         address = addresses[0].address;
+        req.toastr.info('You have successfully logged in.','Hello '+ req.user.email,{"positionClass": "toast-top-right","closeButton": true})
         res.cookie('address', address, {
           expire: 360000 + Date.now()
-        });
-        req.toastr.info('You have successfully logged in.','Hello '+ req.user.email,{"positionClass": "toast-top-right","closeButton": true})
-        res.render('profile.ejs', {
+        }).render('profile.ejs', {
           req:req,
           user: req.user, // get the user out of session and pass to template
           ProjectConfiguration: projectArray,
@@ -256,7 +258,66 @@ module.exports = {
       console.log(err);
     }
   }
-};
+
+  ,
+
+  getPrivateKey : async (req,res) => {
+    console.log("called getPrivateKey");
+    try{
+      const userEmail = req.user.email;
+      const pwd = req.body.password;
+      if (_.isEmpty(pwd)){
+        return res.json({status:false, error:"Invalid password"});
+      }
+      const userClient = await client.findOne({where:{email:userEmail}});
+      if (userClient===null){
+        return res.json({status:false, error:"User not found"});
+      }
+      if (!bcrypt.compareSync(pwd, userClient.password)){
+        return res.json({status:false, error:"Incorrect password"});
+      };
+      const userAddress = await userAddressDB.findOne({where:{[Op.and]:[{currencyType:"masterEthereum"},{client_id:userClient.uniqueId}]}});
+      if (userAddress===null) {
+        return res.json({status:false, error:"User not found"});
+      }
+      const privKey = userAddress.privateKey;
+      res.json({status:true, privKey:privKey});
+    }
+    catch(e){
+      console.log("exception at userLogin.getPrivateKey: ", e);
+      res.json({status:false, error:"internal error"});
+    }
+},
+
+  getProjectKey: async (req,res) => {
+    console.log("called getProjectKey");
+    try{
+      const projectId =  req.body.projectId;
+      const userEmail = req.user.email;
+      const pwd = req.body.password;
+      if (_.isEmpty(projectId) && _.isEmpty(pwd)){
+        return res.json({status: false, error:"bad request, missing parameter(s)"});
+      }
+      const userClient = await client.findOne({where:{email:userEmail}});
+      if (userClient===null){
+        return res.json({status:false, error:"User not found"});
+      }
+      if (!bcrypt.compareSync(pwd, userClient.password)){
+        return res.json({status:false, error:"Incorrect password"});
+      };
+      const userAddress = await userAddressDB.findOne({where:{[Op.and]:[{project_id:projectId},{currencyType:"Ethereum"},{client_id:userClient.uniqueId}]}});
+      if (userAddress===null) {
+        return res.json({status:false, error:"User not found"});
+      }
+      const privKey = userAddress.privateKey;
+      res.json({status:true, privKey:privKey});
+    }
+    catch(e){
+      console.log("exception ar userLogin/impl.getProjectKey: ", e);
+      res.json({error:"internal error", status:false});
+    }
+  }
+}
 
 function getProjectArray(email) {
   var projectArray = [];

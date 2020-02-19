@@ -37,23 +37,23 @@
                         </div>
                         <div class="bottom">
                           <div class="cl-footer">
-                            <div class="dolar">1200000 <img src="assets/images/icons/token.png" width="25" height="25">
+                            <div class="dolar"><%= packagePrice %> <img src="assets/images/icons/token.png" width="25" height="25">
                             </div>
-                            <% if(balance<1200000) { %>
+                            <% if(balance<packagePrice ) { %>
                             <h5> Your balance is insufficient. Please recharge your address with Viroboss Token </h5>
                             <% } else { %>
                             <a data-toggle="modal" data-target="#paymentConfirmationModal" data-whatever="@getbootstrap"
                               class="btn-table btn-rounded btn-1 hvr-sweep-to-right" onclick="sendOTP()">Buy Now</a>
                             <% } %>
                           </div>
-                          <div class="bancor-wc" style="display:block" id="bancor-wc-id-1"></div>
-                          <div id="metamaskButton" style="display:none">
+                          <!-- <div class="bancor-wc" style="display:block" id="bancor-wc-id-1"></div> -->
+                          <!-- <div id="metamaskButton" style="display:none">
                             <br>
                             <h5> You seem to be using Metamask wallet </h5>
                             <a data-whatever="@getbootstrap" class="btn btn-rounded btn-lg btn-info mr-1"
                               onclick="buyMetamask()">Buy
                               Using Metamask</a><br><br>
-                      </div>
+                      </div> -->
                         </div>
                       </div>
                     </div>
@@ -91,7 +91,7 @@
                                     <button type="button" class="btn btn-rounded btn-lg btn-info"  onclick="makePayment()">Make Payment</button>
                                 </div>
                             </form> -->
-              <form action="/payment">
+              <form id="form-otp" action="/payment">
                 <label class="col-12 col-form-label">Confirmation Email is sent. Please enter OTP sent to you on your
                   Registerd
                   Email</label>
@@ -125,6 +125,23 @@
     $.get("/payment")
   }
 
+  $("#form-otp").on('submit', e => {
+    e.preventDefault();
+    $.ajax({method:"get",url:"/payment",data:{otpValue:e.target.otpValue.value}, success:res => {
+      console.log("inside success in ajax form-otp: ", res);
+      if (res.status===false){
+        // show toaster
+        toastr.error(res.error);
+      }else{
+        toastr.success(res.message);
+        $("#paymentConfirmationModal").modal("toggle");
+      }
+    },
+    error: err => {
+      console.log("error in ajax form-otp: ", err);
+    } })
+  })
+
 </script>
 <script>
   $(document).keydown(function (event) {
@@ -139,19 +156,19 @@
   });
 </script>
 <script>
-  checkMetamask();
-  function checkMetamask() {
-    if (typeof web3 !== 'undefined') {
-      window.web3 = new Web3(web3.currentProvider)
-      $("#metamaskButton").get(0).style.display = '';
-      $('#bancor-wc-id-1').hide();
-    } else {
-      $('#bancor-wc-id-1').show();
-    }
-  }
+  // checkMetamask();
+  // function checkMetamask() {
+  //   if (typeof web3 !== 'undefined') {
+  //     window.web3 = new Web3(web3.currentProvider)
+  //     $("#metamaskButton").get(0).style.display = '';
+  //     $('#bancor-wc-id-1').hide();
+  //   } else {
+  //     $('#bancor-wc-id-1').show();
+  //   }
+  // }
   function buyMetamask() {
     window.web3.eth.net.getNetworkType().then(networkType => {
-      if (networkType != 'main') {
+      if (networkType != 'rinkeby') {
         console.log(networkType, "networkType")
         window.alert("Please change network in your Metamask to Mainnet");
       }
@@ -192,7 +209,7 @@
       "from": window.web3.currentProvider.publicConfigStore.getState().selectedAddress,
       "to": "0x41ab1b6fcbb2fa9dced81acbdec13ea6315f2bf2",
       "value": "0x0",
-      "data": contractInstance.methods.transfer("0x920e938a80fa1669b608166741eeb01de6c57402", "1200000000000000000000000").encodeABI()
+      "data": contractInstance.methods.transfer("0x920e938a80fa1669b608166741eeb01de6c57402", "<%= packagePrice %>"+"000000000000000000").encodeABI()
     };
     window.web3.eth.sendTransaction(transaction, (err, data) => {
       if (err) {
@@ -226,7 +243,7 @@
         // Request account access if needed
         await ethereum.enable();
         window.web3.eth.net.getNetworkType().then(networkType => {
-          if (networkType != 'main') {
+          if (networkType != 'rinkeby') {
             console.log(networkType, "networkType")
             window.alert("Please change network in your Metamask to Mainnet");
           }

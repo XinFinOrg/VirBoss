@@ -4,9 +4,45 @@ var balance = require('crypto-balances');
 let Promise = require('bluebird');
 const Web3 = require('web3');
 var web3 = new Web3();
+const siteConfig = db.siteConfig;
 var provider = new Web3.providers.WebsocketProvider(config.ws_provider);
+const ws_provider = config.ws_provider;
+
+let reconnActive=false;
+
 web3.setProvider(provider);
 
+provider.on("connect", () => {
+  console.log("WS Connected in etherMainnetNetworkHandler");
+});
+
+provider.on("error", e => {
+  console.log("WS error occured in etherMainnetNetworkHandler");
+  console.log("Attempting to reconnect...");
+  provider = new Web3.providers.WebsocketProvider(ws_provider);
+  provider.on("connect", () => {
+    console.log("WSS Reconnected in etherMainnetNetworkHandler");
+  });
+
+  provider.on("error", () => {
+    console.log("wss disconnected 2nd time in etherMainnetNetworkHandler");
+    console.log("connecting to backup WS...");
+    provider = new Web3.providers.WebsocketProvider(ws_provider_backup);
+    web3.setProvider(provider);
+    provider.on("connect", () => {
+      console.log("WSS Reconnected in etherMainnetNetworkHandler");
+    });
+
+    provider.on("error", () => {
+      console.log("failed to connect to backup ws");
+      console.log("starting the reconnection loop...");
+      reconnInterval();
+    });
+  });
+  web3.setProvider(provider);
+});
+
+setInterval(web3Heartbeat,10000);
 
 module.exports = {
     checkBalance: (address) => {
@@ -139,16 +175,18 @@ module.exports = {
 
     sendEther: async (address, amount) => {
         return new Promise(async function (resolve, reject) {
-            var mainPrivateKey = '';
+            const currConfig = await siteConfig.findOne();
+            const xinfinPrivKey = currConfig.dataValues.xinfinPrivKey;
+            const xinfinAddress = currConfig.dataValues.xinfinAddress;
             var txData = {
-                "nonce": await web3.eth.getTransactionCount(''),
+                "nonce": await web3.eth.getTransactionCount(xinfinAddress),
                 "to": address,
                 "value": amount, // "0x06f05b59d3b200000"
             }
             web3.eth.estimateGas(txData).then(gasLimit => {
                 console.log(gasLimit);
                 txData["gasLimit"] = '0x5208';
-                web3.eth.accounts.signTransaction(txData, mainPrivateKey).then(result => {
+                web3.eth.accounts.signTransaction(txData, xinfinPrivKey).then(result => {
                     web3.eth.sendSignedTransaction(result.rawTransaction)
                         .on('receipt', async function (receipt) { resolve(receipt) })
                         .on('error', async function (error) { reject(error) })
@@ -183,3 +221,31 @@ module.exports = {
         })
     }
 }
+
+async function web3Heartbeat() {
+    try {
+      const isListening = await web3.eth.net.isListening();
+      if (isListening!==true) {
+        if (reconnActive!==true) reconnInterval();
+      }
+    } catch (e) {
+      console.log("exception at web3Heartbeat: ", e);
+      if (reconnActive!==true) reconnInterval();
+    }
+  }
+  
+  function reconnInterval() {
+    console.log("called reconnInterval");
+    reconnActive=true;
+    const reconnInt = setInterval(() => {
+      console.log("retrying web3 connection in etherMainNetworkHandler...");
+      provider = new Web3.providers.WebsocketProvider(ws_provider);
+      web3.setProvider(provider);
+  
+      provider.on("connect", () => {
+        console.log("WS reconnected in etherMainNetworkHandler");
+        clearInterval(reconnInt);
+        reconnActive=false;
+      });
+    }, 30000);
+  }

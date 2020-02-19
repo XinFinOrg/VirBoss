@@ -52,7 +52,7 @@ module.exports = {
       } else {
         byteCode = projectData.tokenByteCode;
         if (byteCode == null) {
-          byteCode = await solc.compile(projectData.tokenContractCode).contracts[':Coin'] //solc.compile(projectData.tokenContractCode).contracts[':Coin'].bytecode;
+          byteCode = await solc.compile(projectData.tokenContractCode).contracts[':Coin'] //solc.compile(projectData.tokenContractCode, 1).contracts[':Coin'].bytecode;
           projectData.tokenByteCode = byteCode.bytecode;
           projectData.tokenABICode = byteCode.interface;
           byteCode = byteCode.bytecode

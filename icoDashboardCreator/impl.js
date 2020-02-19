@@ -323,11 +323,10 @@ module.exports = {
             expiresIn: configAuth.jwtAuthKey.tokenLife
           });
         //Send back the token to the user
-        res.cookie('token', token, {
-          expire: 360000 + Date.now()
-        });
         req.flash('error','Something went wrong please try again later.')
-        return res.json({
+        return res.cookie('token', token, {
+          expire: 360000 + Date.now()
+        }).json({
           'token': "success"
         });
       } catch (error) {

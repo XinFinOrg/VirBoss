@@ -45,12 +45,24 @@
     <script src="/icoDashboard/js/components/datatables-init.js"></script>
 </head>
 
+<style>
+.my-btn {
+    color: white !important;
+    background: #ac5077 !important;
+
+}
+.my-btn:hover {
+    background: #70314f !important;
+
+}
+</style>
+
 <body class="layout-horizontal menu-auto-hide">
         <!-- START APP WRAPPER -->
         <div id="app">
             <!-- START TOP HEADER WRAPPER -->
             <div class="header-wrapper">
-                <div class="header-top">
+                <div class="header-top" style="background: #ac5077 !important;">
                     <!-- START MOBILE MENU TRIGGER -->
                     <ul class="mobile-only navbar-nav nav-left">
                         <li class="nav-item">
@@ -67,7 +79,7 @@
                                     <li>
                                         <!-- START LOGO -->
                                         <a href="/">
-                                            <div class="logo"><img src="/adminAssets/img/logo.png" width="211" height="42"></div>
+                                            <div class="logo"><img src="/adminAssets/img/logo.png" width="50px"></div>
                                         </a>
                                         <!-- END LOGO -->
                                     </li>
@@ -111,13 +123,10 @@
                                         <div class="content-404">
                                             <img src="/adminAssets/img/404.png" alt="" title="">
                                             <h3>The server indicates that you did a mistake of misspelling the URL or requesting for a page that is no longer available.</h3> 
-                                           <!-- <h2><%= error.status %>  <%= message %> </h2>
-                                           <pre><%= error.stack %></pre>                                    -->
                                             <div class="form-actions">
                                                 <div class="row demo-buttons--preview">
                                                     <div class="col-md-12">
-                                                        <a href="/" class="btn btn-primary btn-rounded">Back To Home</a>
-                                                        <!-- <button class="btn btn-info btn-rounded btn-outline">Contact US</button> -->
+                                                        <a href="/" class="btn btn-rounded my-btn">Back To Home</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -139,7 +148,7 @@
         <!-- END APP WRAPPER -->
     
         <!-- FOOTER -->
-        <footer class="footer text-center">Copyright © 2019 Viroboss International. All rights reserved.</footer>
+        <footer class="footer text-center">Copyright © 2019 Viroboss. All rights reserved.</footer>
         <!-- END FOOTER -->
         </body>
     
