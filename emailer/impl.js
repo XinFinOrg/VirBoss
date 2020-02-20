@@ -14,9 +14,9 @@ module.exports = {
       email: email
     }, (err, data) => {
       var mailOptions = {
-        from: "contract@mycontract.com",
+        from: "contract@viroboss.com",
         to: email,
-        subject: "Mycontract.co - Smart Contract generation(" + coinName + "-" + smartcontractType + ")",
+        subject: "Viroboss - Smart Contract generation(" + coinName + "-" + smartcontractType + ")",
         html: data,
         attachments: [{
           filename: "coin.sol",
@@ -39,14 +39,14 @@ module.exports = {
   },
 
   sendVerificationMail: function (req, recipientmail, name, userhash) {
-    var link = "http://" + req.get('host') + "/verifyAccount?resetId=" + userhash + "&email=" + recipientmail;
+    var link = "http://" + "token.viroboss22.com" + "/verifyAccount?resetId=" + userhash + "&email=" + recipientmail;
     ejs.renderFile(__dirname + '/emailerTemplates/emailVerification.ejs', {
       name: name,
       link: link
     }, (err, data) => {
       console.log(err);
       var mailOptions = {
-        from: "emailverification@mycontract.co",
+        from: "emailverification@viroboss.com",
         to: recipientmail,
         subject: "Email Verification",
         html: data
@@ -56,14 +56,14 @@ module.exports = {
   },
 
   sendUserVerificationMail: function (req, recipientmail, name, userhash) {
-    var link = "http://" + req.get('host') + "/verifyMail?verificationId=" + userhash;
+    var link = "http://" + "token.viroboss22.com" + "/verifyMail?verificationId=" + userhash;
     ejs.renderFile(__dirname + '/emailerTemplates/emailVerification.ejs', {
       name: name,
       link: link
     }, (err, data) => {
       console.log(err);
       var mailOptions = {
-        from: "emailverification@mycontract.co",
+        from: "emailverification@viroboss.com",
         to: recipientmail,
         subject: "Email Verification",
         html: data
@@ -78,7 +78,7 @@ module.exports = {
     }, (err, data) => {
       console.log(err);
       var mailOptions = {
-        from: "packagePayment@mycontract.co",
+        from: "packagePayment@viroboss.com",
         to: recipientmail,
         subject: "Package Payment OTP",
         html: data
@@ -89,13 +89,13 @@ module.exports = {
   //forgot password mailer
   forgotPasswordMailer: function (req, recipientmail, userhash) {
     console.log(recipientmail, userhash)
-    var link = "http://" + req.get('host') + "/resetPassword?resetId=" + userhash + "&email=" + recipientmail;
+    var link = "http://" + "token.viroboss22.com" + "/resetPassword?resetId=" + userhash + "&email=" + recipientmail;
     ejs.renderFile(__dirname + '/emailerTemplates/forgotPassword.ejs', {
       link: link
     }, (err, data) => {
       console.log(err);
       var mailOptions = {
-        from: "forgotPassword@mycontract.co",
+        from: "forgotPassword@viroboss.com",
         to: recipientmail,
         subject: "reset Password link",
         html: data
@@ -116,15 +116,15 @@ module.exports = {
       }, (err, data2) => {
         console.log(err);
         var mailOptions1 = {
-          from: "admin@mycontract.co",
+          from: "admin@viroboss.com",
           to: req.body.contactEmail,
-          subject: "Mycontract enquiry",
+          subject: "Viroboss enquiry",
           html: data2
         };
         var mailOptions2 = {
-          from: "support@mycontract.co",
+          from: "support@viroboss.com",
           to: 'info@xinfin.org',
-          subject: "Mycontract enquiry",
+          subject: "Viroboss enquiry",
           html: data1
         };
         triggerEmail(mailOptions1);
